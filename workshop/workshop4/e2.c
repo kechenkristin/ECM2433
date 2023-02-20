@@ -50,6 +50,8 @@ void printStack(Stack stack) {
 	}   
 }
 
+
+/* read a .txt file line by line */
 void readFile(char* fileName) {
 	FILE* filePointer;
 	int bufferLength = 255;
@@ -64,29 +66,81 @@ void readFile(char* fileName) {
 	fclose(filePointer);
 }
 
-
-/*
-void constructStruct(char* line) {
-	char s[] = " -	";
+/* convert a string into an array of string
+ * 1955 - 1957	Anthony Eden	Conservative
+ * {"1955", "1957", "Anthony Eden", "Conservative"}
+ */
+char** stringToArr(char* line) {
+	char s[] = "-	";
 
 	char* token = strtok(line, s);
 
+	int i = 0;
+	char **array;
+	int numOfItems = 4;
+	array = malloc(numOfItems * sizeof(char*));
+
 	while( token != NULL ) {
-		printf( " %s\n", token );
+		array[i++] = token;
 		token = strtok(NULL, s);
 	}
+
+	/*
+	for (i = 0; i < numOfItems; i++) {
+		printf("%s\n", array[i]);
+	}
+	*/
+	return array;
 }
-*/
 
+/* convert an array of string into a struct */
+struct PM* arrToStruct(char** arr) {
+	struct PM *pm = (struct PM*) malloc(sizeof(struct PM));
+	pm->start = atoi(arr[0]);
+	pm->end = atoi(arr[1]);
+	strcpy(pm->who, arr[2]);
+	strcpy(pm->party, arr[3]);
+	return pm;
+}
 
+/* push all the pms from fileName.txt */
+Stack pushAllPM(char* fileName) {
+	FILE* filePointer;
+	int bufferLength = 255;
+	cha toker buffer[bufferLength]; /* not ISO 90 compatible */
+
+	filePointer = fopen(fileName, "r");
+
+	Stack s = stackNew();
+
+	while(fgets(buffer, bufferLength, filePointer)) {
+		char** arr;
+		arr = stringToArr(buffer);
+
+		struct PM *pm;
+		pm = arrToStruct(arr);
+
+		s = push(s, pm);
+	}
+
+	fclose(filePointer);
+	return s;
+}
+
+Stack popAllPM(Stack s) {
+	while (s != NULL) {
+		struct PM *pm = (struct PM*)s->data;
+		printf("%4d - %4d\t%s\t%s\n", pm->start, pm->end, pm->who, pm->party);
+		s = pop(s);
+	}
+	return s;
+}
 
 
 int main() {
-	int start, end;
-	char who[31], party[41];
-
 	/*scanf("%4d - %4d\t%30[^\t]\t%40[^\n]\n", &start, &end, who, party); */
 
+	/*
 	struct PM demo;
 	demo.start = 1868;
 	demo.end = 1868;
@@ -97,8 +151,21 @@ int main() {
 	s = push(s, &demo);
 	printStack(s);
 
-	/* readFile("pm.txt"); */
 
 	char str[] = "1955 - 1957	Anthony Eden	Conservative";
-	constructStruct(str);
+	char** arr;
+	arr = stringToArr(str);
+
+	struct PM *pm;
+	pm = arrToStruct(arr);
+
+	s = push(s, pm);
+	printStack(s);
+	*/
+
+	Stack test = pushAllPM("pm.txt");
+	/*
+	printStack(test);
+	*/
+	test = popAllPM(test);
 }
