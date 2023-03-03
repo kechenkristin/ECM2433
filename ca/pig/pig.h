@@ -4,12 +4,12 @@
 
 /* functiona prototypes */
 
-int is_constant(char c); 
+int is_constant(char); 
 
-int constant_count(char* str);
+int constant_count(char*);
 
-char* case_constant(char* oldstr);
+char* case_constant(char*);
 
-char* case_vowel(char* oldstr);
+char* case_vowel(char*);
 
-char* pig(char* word);
+char* pig(char*);

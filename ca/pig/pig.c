@@ -1,4 +1,5 @@
 #include "pig.h"
+#include <stdio.h>
 
 /* if c is a constant, return 1, else 0 */
 int is_constant(char c) {

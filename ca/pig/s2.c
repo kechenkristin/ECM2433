@@ -1,8 +1,8 @@
-#include <stdio.h>
 #include <string.h>
+#include <stdio.h>
 #include <stdlib.h>
+#define BUFFER_SIZE 8912 /* or some other number */
 
-/* if c is a constant, return 1, else 0 */
 int is_constant(char c) {
         int vowel;
         vowel = !(c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u');
@@ -49,8 +49,7 @@ char* case_constant(char* oldstr) {
     char* newstr;
     /* +1 for '\0' character */
     int newLength = strLength + 2;
-    newstr = (char*) malloc((newLength + 1)*sizeof(char)); 
-    
+    newstr = (char*) malloc((newLength + 1)*sizeof(char));                      
     int i;
     
     for (i = 0; i < vowelCount; i++) {
@@ -85,48 +84,64 @@ char* case_vowel(char* oldstr) {
     return newstr;
 }
 
-/* logical of pig, delegate task to different handler function based on the starting char */
+/* logical of pig, delegate task to different handler function based on the     starting char */
 char* pig(char* word) {
     if (is_constant(word[0])) return case_constant(word);
     return case_vowel(word);
 }
 
-int main() {
-    char happy[] = "happy";
-    char* happy_r = pig(happy);
-    printf("%s => %s\n", happy, happy_r);
-    free(happy_r);
+
+/* https://cboard.cprogramming.com/c-programming/70320-how-remove-newline-string.html#:~:text=All%20you%20have%20to%20do,2005%20at%2004%3A33%20AM.
+ */
+
+/* for every single token, get rid of '\n' */
+char* clean_token(char *token) {
+    char* ct = malloc(strlen(token ? token : '\n'));
+    if (token) strcpy(ct, token);
+    ct[strlen(ct) - 1] = '\0';
+    return ct;
+}
+
+
+void into_tokens(char* line) {
+    const char s[2] = " ";
+    char *token;
     
-    char duck[] = "duck";
-    char* duck_r = pig(duck);
-    printf("%s => %s\n", duck, duck_r);
-    free(duck_r);
+    /* 获取第一个子字符串 */
+   token = strtok(line, s);
+   // char* pig_r = pig(token);
+   // printf("%s\n", pig_r);
+   
+   /* 继续获取其他的子字符串 */
+   while( token != NULL ) {
+      // printf( "%s\n", token );
+      char* c_t;
+      c_t = clean_token(token);
+      char* pig_r = pig(c_t);
+      printf("%s\n", pig_r);
+      free(pig_r);
+      //char* token_ptr = token;
+      //printf("%s\n", pig(token_ptr));
+      token = strtok(NULL, s);
+   }
+}
+
+
+
+
+
+/* https://stackoverflow.com/questions/26771388/taking-continuous-input-from-user-in-c */
+int main(int argc, const char **argv) {
     
-    char glove[] = "glove";
-    char* glove_r = pig(glove);
-    printf("%s => %s\n", glove, glove_r);
-    free(glove_r);
+    char line[BUFFER_SIZE];
+    fgets(line, BUFSIZ, stdin);
+    while (strcmp(line, "\n") != 0) {
+        // line[strcspn(line, "\n")] = 0;
+        // printf("%s", line);
+        into_tokens(line);
+        fgets(line, BUFSIZ, stdin);
+    }
     
-    
-    char evil[] = "evil";
-    char* evil_r = pig(evil);
-    printf("%s => %s\n", evil, evil_r);
-    free(evil_r);
-    
-    char eight[] = "eight";
-    char* eight_r = pig(eight);
-    printf("%s => %s\n", eight, eight_r);
-    free(eight_r);
-    
-    char yowler[] = "yowler";
-    char* yowler_r = pig(yowler);
-    printf("%s => %s\n", yowler, yowler_r);
-    free(yowler_r);
-    
-    char crystal[] = "crystal";
-    char* crystal_r = pig(crystal);
-    printf("%s => %s\n", crystal, crystal_r);
-    free(crystal_r);
-    
-    return 0;
+    // char test[1024] = "hello world\n";
+    // into_tokens(test);
 }
