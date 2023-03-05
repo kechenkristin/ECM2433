@@ -1,49 +1,52 @@
 #include "pig.h"
 #include <stdio.h>
 
-/* if c is a constant, return 1, else 0 */
-int is_constant(char c) {
-	int vowel;
-	vowel = !(c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u');
-	return vowel;
+
+/* if c is a consonant, return 1, else 0 */
+int is_consonant(char c) {
+        int lowercase_vowel, uppercase_vowel;
+        lowercase_vowel = (c == 'a' || c == 'e' || c == 'i' || c == 'o' || c ==  'u');
+        uppercase_vowel = (c == 'A' || c == 'E' || c == 'I' || c == 'O' || c ==  'U');
+        return !(lowercase_vowel || uppercase_vowel);
 }
 
-/* counts how many starting constant. */
-int constant_count(char* str) {
+
+/* counts how many starting consonant. */
+int consonant_count(char* str) {
 	int i = 0;
 
 	int strLength = strlen(str);
-	int constantCount = 0;
+	int consonantCount = 0;
 
 	for (i = 0; i < strLength; i++) {
-		if (is_constant(str[i])) {
+		if (is_consonant(str[i])) {
 			if (str[i] == 'y') {
 				if (i == 0) {
 					/* y begins a word, acts as a consonant*/
-					constantCount++;
+					consonantCount++;
 				} else {
 					/*  follows consonants, then it acts as a vowe. */
-					return constantCount;
+					return consonantCount;
 				}
 			} else {
-				/* other constant */
-				constantCount++;
+				/* other consonant */
+				consonantCount++;
 			}
 		}else {
 			/* vowel*/
-			return constantCount;
+			return consonantCount;
 		}
 	}
-	return constantCount;
+	return consonantCount;
 }
 
-/* handle the case of if the word begin with constants */
-char* case_constant(char* oldstr) {
+/* handle the case of if the word begin with consonants */
+char* case_consonant(char* oldstr) {
 	int strLength = strlen(oldstr);
 
-	int constantCount = constant_count(oldstr);
+	int consonantCount = consonant_count(oldstr);
 
-	int vowelCount = strLength - constantCount;
+	int vowelCount = strLength - consonantCount;
 
 
 	char* newstr;
@@ -54,10 +57,10 @@ char* case_constant(char* oldstr) {
 	int i;
 
 	for (i = 0; i < vowelCount; i++) {
-		newstr[i] = oldstr[i + constantCount];
+		newstr[i] = oldstr[i + consonantCount];
 	}
 
-	for (i = 0; i < constantCount; i++) {
+	for (i = 0; i < consonantCount; i++) {
 		newstr[i + vowelCount] = oldstr[i];
 	}
 
@@ -87,6 +90,6 @@ char* case_vowel(char* oldstr) {
 
 /* logical of pig, delegate task to different handler function based on the starting char */
 char* pig(char* word) {
-	if (is_constant(word[0])) return case_constant(word);
+	if (is_consonant(word[0])) return case_consonant(word);
 	return case_vowel(word);
 }

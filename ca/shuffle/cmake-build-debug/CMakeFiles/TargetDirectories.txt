@@ -1,0 +1,3 @@
+/home/kristin/study/exeter/y2term2/ECM2433/ca/shuffle/cmake-build-debug/CMakeFiles/shuffle.dir
+/home/kristin/study/exeter/y2term2/ECM2433/ca/shuffle/cmake-build-debug/CMakeFiles/edit_cache.dir
+/home/kristin/study/exeter/y2term2/ECM2433/ca/shuffle/cmake-build-debug/CMakeFiles/rebuild_cache.dir

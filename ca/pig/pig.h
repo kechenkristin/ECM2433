@@ -2,6 +2,8 @@
 #include <string.h>
 #include <stdlib.h>
 
+#define BUFFER_SIZE 8912
+
 /* functiona prototypes */
 
 int is_constant(char); 
