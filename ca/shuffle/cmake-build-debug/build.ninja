@@ -55,6 +55,12 @@ build CMakeFiles/shuffle.dir/shuffle.c.o: C_COMPILER__shuffle_Debug /home/kristi
   OBJECT_DIR = CMakeFiles/shuffle.dir
   OBJECT_FILE_DIR = CMakeFiles/shuffle.dir
 
+build CMakeFiles/shuffle.dir/test2.c.o: C_COMPILER__shuffle_Debug /home/kristin/study/exeter/y2term2/ECM2433/ca/shuffle/test2.c || cmake_object_order_depends_target_shuffle
+  DEP_FILE = CMakeFiles/shuffle.dir/test2.c.o.d
+  FLAGS = -g -fdiagnostics-color=always
+  OBJECT_DIR = CMakeFiles/shuffle.dir
+  OBJECT_FILE_DIR = CMakeFiles/shuffle.dir
+
 
 # =============================================================================
 # Link build statements for EXECUTABLE target shuffle
@@ -63,7 +69,7 @@ build CMakeFiles/shuffle.dir/shuffle.c.o: C_COMPILER__shuffle_Debug /home/kristi
 #############################################
 # Link the executable shuffle
 
-build shuffle: C_EXECUTABLE_LINKER__shuffle_Debug CMakeFiles/shuffle.dir/shuffle.c.o
+build shuffle: C_EXECUTABLE_LINKER__shuffle_Debug CMakeFiles/shuffle.dir/shuffle.c.o CMakeFiles/shuffle.dir/test2.c.o
   FLAGS = -g
   OBJECT_DIR = CMakeFiles/shuffle.dir
   POST_BUILD = :
