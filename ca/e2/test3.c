@@ -3,15 +3,16 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define SIZE 10
+#define LEN 20
 
+/* init, set time as random seed */
 void init() {
     srand((unsigned int) time(NULL));
 }
 
 
+/* generate random number at the range of [low, high) */
 int randomize(int low, int high) {
-    // srand((unsigned int) time(NULL));
     int diff, val;
 
     diff = high - low;
@@ -23,49 +24,64 @@ int randomize(int low, int high) {
     return val + low;
 }
 
-void initDeck(int *deck, const int size) {
+
+/* automatically generate an integer array */
+void initDeck(int *deck, const int len) {
     int i;
-    for (i = 0; i < size; ++i) {
+    for (i = 0; i < len; ++i) {
         *deck++ = i + 1;
     }
 }
 
-void writeDeck(const int *deck, const int size) {
+
+/* print integer deck */
+void printIntDeck(const int *deck, const int len) {
     int i;
 
     printf("[");
-    if (size > 0) {
+    if (len > 0) {
         printf("%d", *deck++);
     }
-    for (i = 1; i < size; ++i) {
+    for (i = 1; i < len; ++i) {
         printf(", %d", *deck++);
     }
     printf("]");
 }
 
 
+/* print array of strings */
+/* https://stackoverflow.com/questions/60591105/how-do-i-print-the-contents-of-an-array-of-strings */
+void printCharDeck(const char *deck, const int len) {
+    int i;
+
+    printf("[");
+    char **ptr;
+    for (ptr = deck; *ptr; ptr++)
+        printf("%s", *ptr);
+    printf("]");
+}
+
+
 
 void riffle_once(void *L, int len, int size, void *work) {
-    // srand((unsigned int) time(NULL));
     int wlp, lp, rp, cutPoint;
     void *ptr, *LPtr, *RPtr;
 
+    // malloc heap space for work
+    work = malloc(len * size);
+
+    // the array to be shuffled will be divided into two halves
     cutPoint = len / 2;
     wlp = 0;
     lp = 0;
     rp = cutPoint;
-
-
-    work = malloc(len * size);
-
     ptr = work;
     LPtr = L;
     RPtr = L + size * cutPoint;
 
-    // printf("%p", LPtr);
 
     while (lp < cutPoint && rp < len) {
-
+        // 50% chance from left side array
         if (randomize(0, 2) == 1) {
             memcpy(ptr, LPtr, size);
             ptr += size;
@@ -74,6 +90,7 @@ void riffle_once(void *L, int len, int size, void *work) {
             lp++;
             // work[wlp++] = L[lp++];
         } else {
+            // 50% chance from right side array
             memcpy(ptr, RPtr, size);
             ptr += size;
             RPtr += size;
@@ -82,9 +99,6 @@ void riffle_once(void *L, int len, int size, void *work) {
             // work[wlp++] = L[rp++];
         }
     }
-
-
-
 
     while (lp < cutPoint) {
         memcpy(ptr, LPtr, size);
@@ -120,10 +134,11 @@ int cmpInt(void *v1, void *v2) {
     int *i1 = (int *)v1;
     int *i2 = (int *)v2;
     int val = *i1 - *i2;
+    // printf("i1: %d, i2: %d, val: %d\n", *i1, *i2, val);
 
     if (val < 0) return -1;
-    if (val == 0) return 0;
-    return 1;
+    if (val > 0) return 1;
+    return 0;
 }
 
 int cmpStr(void *v1, void *v2) {
@@ -141,23 +156,28 @@ int check_shuffle(void *L, int len, int size, int (*cmp)(void *, void *)) {
 
     // before shuffle
     memcpy(before, L, len * size);
-    riffle_once(L, len, size, work);
+    // riffle_once(L, len, size, work);
+    riffle(L, len, size,1);
+    // after shuffle
     memcpy(after, L, size * len);
 
-    int is_equal = 0;
+    int is_equal_count = 0;
     int i, j;
 
-    // L04
-    for (BPtr = before, i = 0; i < len; i++, BPtr++) {
-        for (APtr = after, j = 0; j < len; j++, APtr++) {
+    for (BPtr = before, i = 0; i < len; i++, BPtr+= size) {
+        for (APtr = after, j = 0; j < len; j++, APtr+= size) {
             int r = cmp(BPtr, APtr);
-            if (r == 0) is_equal = 1;
+            if (r == 0) is_equal_count++;
         }
-        is_equal ^= is_equal;
+        // printf("is_equal_count: %d\n", is_equal_count);
     }
-    return is_equal;
+
+    free(before);
+    free(after);
+    return is_equal_count == len;
 }
 
+/*
 int main() {
     // printf("randomize: %d\n", randomize(0, 2));
 
@@ -183,7 +203,7 @@ int main() {
     printf("\n\n");
 
     printf("test cmp function\n");
-    int i1 = 0;
+    int i1 = 8;
     int i2 = 8;
     int *p1 = &i1;
     int *p2 = &i2;
@@ -191,4 +211,14 @@ int main() {
     int r = cmpInt(p1, p2);
     printf("%d\n", r);
 
+    printf("test check shuffle\n");
+    int deck2[SIZE];
+    initDeck(deck2, SIZE);
+    writeDeck(deck2, SIZE);
+    printf("\n");
+    int c = check_shuffle(deck2, SIZE, 4, cmpInt);
+    writeDeck(deck2, SIZE);
+    printf("\n");
+    printf("%d\n", c);
 }
+ */
