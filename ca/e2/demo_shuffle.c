@@ -14,7 +14,7 @@ int main() {
     printf("\n");
 
     printf("After riffle shuffle the integer array\n");
-    riffle(deck, LEN, 4, 1);
+    riffle(deck, LEN, INTEGER_SIZE, 1);
     printIntDeck(deck, LEN);
     printf("\n\n");
 
@@ -36,7 +36,7 @@ int main() {
 
     printf("Test check shuffle\n");
     printf("Test check shuffle for integer array\n");
-    int c1 = check_shuffle(deck, LEN, 4, cmpInt);
+    int c1 = check_shuffle(deck, LEN, INTEGER_SIZE, cmpInt);
     printf("Return value of check shuffle for integer array (1 if obey rules, 0 not): %d\n", c1);
     int c2 = check_shuffle(greek, greek_len, greek_size, cmpStr);
     printf("Return value of check shuffle for string array (1 if obey rules, 0 not): %d\n", c2);

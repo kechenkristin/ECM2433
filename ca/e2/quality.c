@@ -1,110 +1,7 @@
 #include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <time.h>
 
-#define SIZE 10
+#include "test3.c"
 
-void init() {
-    srand((unsigned int) time(NULL));
-}
-
-
-int randomize(int low, int high) {
-    int diff, val;
-
-    diff = high - low;
-    if (diff == 0) {
-        return low;
-    }
-
-    val = rand() % diff;
-    return val + low;
-}
-
-void initDeck(int *deck, const int size) {
-    int i;
-    for (i = 0; i < size; ++i) {
-        *deck++ = i + 1;
-    }
-}
-
-void writeDeck(const int *deck, const int size) {
-    int i;
-
-    printf("[");
-    if (size > 0) {
-        printf("%d", *deck++);
-    }
-    for (i = 1; i < size; ++i) {
-        printf(", %d", *deck++);
-    }
-    printf("]");
-}
-
-void riffleShuffle(int *const deck, const int size, int flips) {
-    int n, cutPoint, nlp, lp, rp, bound;
-    int *nl;
-
-    nl = (int *) malloc(size * sizeof(int));
-
-    for (n = 0; n < flips; ++n) {
-        cutPoint = size / 2;
-
-        if (randomize(0, 2) > 0) {
-            cutPoint = cutPoint + randomize(0, size / 10);
-        } else {
-            cutPoint = cutPoint - randomize(0, size / 10);
-        }
-
-
-        nlp = 0;
-        lp = 0;
-        rp = cutPoint;
-
-        while (lp < cutPoint && rp < size) {
-            /* Allow for an imperfect riffling so that more than one card can come from the same side in a row
-               biased towards the side with more cards. Remove the IF statement for perfect riffling. */
-            bound = (cutPoint - lp) * 50 / (size - rp);
-            printf("bound: %d\n", bound);
-            if (randomize(0, 50) >= bound) {
-                nl[nlp++] = deck[rp++];
-            } else {
-                nl[nlp++] = deck[lp++];
-            }
-        }
-        while (lp < cutPoint) {
-            nl[nlp++] = deck[lp++];
-        }
-        while (rp < size) {
-            nl[nlp++] = deck[rp++];
-        }
-
-        memcpy(deck, nl, size * sizeof(int));
-    }
-
-    free(nl);
-}
-
-float quality(int *numbers, int len) {
-    int good_count = 0;
-    int num_of_pairs = len - 1;
-
-    int *sPtr, *fPtr, i;
-    fPtr = numbers;
-    fPtr++;
-    // printf("%d\n", *fPtr);
-
-    for (sPtr = numbers, i = 0; i < num_of_pairs; fPtr++, sPtr++, i++) {
-        printf("(%d, %d) ", *sPtr, *fPtr);
-        if (*sPtr < *fPtr) good_count++;
-    }
-    printf("\n");
-    printf("%d\n", good_count);
-    printf("%d\n", len);
-    float ret = good_count / (float) num_of_pairs;
-    return ret;
-}
 
 
 int main() {
@@ -147,4 +44,17 @@ int main() {
     float f2 = quality(nums, 7);
     printf("%f\n", f2);
 
+    /*
+    int test[20];
+    generate_array(test, 20);
+    printIntDeck(test, 20);
+     */
+    // float test2 = average_quality(21, 1, 1);
+    // printf("%f", test2);
+
+    int shuffles;
+    for (shuffles = 1; shuffles <= 15; shuffles++) {
+        float aq = average_quality(50, shuffles, 30);
+        printf("average quality (with %d shuffles): %f \n", shuffles, aq);
+    }
 }
