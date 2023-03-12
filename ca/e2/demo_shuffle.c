@@ -1,3 +1,4 @@
+
 #include <stdio.h>
 #include <stdlib.h>
 #include "test3.c"
@@ -9,7 +10,7 @@ int main() {
     int deck[LEN];
     init();
     printf("Before shuffle the integer array\n");
-    initDeck(deck, LEN);
+    init_array(deck, LEN);
     printIntDeck(deck, LEN);
     printf("\n");
 

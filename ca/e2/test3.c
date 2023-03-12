@@ -27,7 +27,7 @@ int randomize(int low, int high) {
 
 
 /* automatically generate an integer deck[1, 2, ..., len] */
-void initDeck(int *deck, const int len) {
+void init_array(int *deck, const int len) {
     int i;
     for (i = 0; i < len; ++i) {
         *deck++ = i + 1;
