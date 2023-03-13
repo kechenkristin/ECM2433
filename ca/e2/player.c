@@ -3,7 +3,6 @@
 
 #define DECK_LEN = 52
 #include "ds3.c"
-#include "test3.c"
 
 typedef struct {
     int id;
@@ -29,6 +28,3 @@ void init_players(int Nplayers, Player* players) {
     int i;
 }
 
-int main() {
-    Player player1 = create_player(1, )
-}
