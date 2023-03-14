@@ -10,8 +10,6 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-#define COUNT  sizeof numbers / sizeof (int)
-#define COUNT2 sizeof more_numbers / sizeof (int)
 
 struct node {
     void *data;
@@ -52,7 +50,7 @@ llist *llist_create(void *new_data) {
 
 
 /* create a llist from an integer array .*/
-llist create_llist_from_array(int *numbers, int len) {
+llist *create_llist_from_array(int *numbers, int len) {
     llist *my_list = llist_create(NULL);
 
     int i;

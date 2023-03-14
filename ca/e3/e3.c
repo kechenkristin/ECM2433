@@ -2,6 +2,9 @@
 #include <stdio.h>
 
 #define DECK_LEN 52
+#define PLAYER_NUMBER 6
+
+
 
 #include "shuffle.c"
 #include "player.c"
@@ -57,13 +60,14 @@ llist init_pile(int Nplayers, int *deck) {
         pile = deck + player_cards;
         pile_llist = create_llist_from_array(pile, pile_cards);
     } else {
-        pile_llist = llist_create(NULL);
+        pile_llist = llist_create(0);
     }
     return pile_llist;
 }
 
 
 int main() {
+    // printf("player size: %d", get_player_size());
     int deck[52];
     init_deck(deck);
     printIntDeck(deck, 52);
@@ -77,34 +81,82 @@ int main() {
 
     // test create a llist using array
     printf("\ntest create a llist using array\n");
-    llist deck_llist = create_llist_from_array(deck, 52);
-    llist_print(deck_llist, numprint);
+    llist deck_llist = create_llist_from_array(deck, DECK_LEN);
+    llist_print(deck_llist);
 
     // test create a player
+    /*
     printf("\ntest create a player\n");
     Player *player_test = create_single_player(1, deck_llist);
     // test print player
     print_single_player(player_test);
+     */
 
     // test init_player_cards_from_deck
+    /*
     printf("\ntest init_player_cards_from_deck\n");
     int *player1_cards = init_player_cards_from_deck(1, deck, 17);
     printIntDeck(player1_cards, 17);
+     */
 
     // test create_players
+
     printf("\ntest create_players\n");
-    Player *players = create_Nplayers(3, deck);
-    print_players(players, 3);
+    Player *players = create_Nplayers(PLAYER_NUMBER, deck);
+    // Player *players = init_Nplayers(PLAYER_NUMBER, deck);
+
+    printf("create_players success\n");
+    print_players(players, PLAYER_NUMBER);
 
     // test get_player_by_id
+    /*
     printf("get_player_by_id\n");
+    Player *player0 = get_player_by_id(0, players);
+    print_single_player(player0);
+
+
     Player *player1 = get_player_by_id(1, players);
     print_single_player(player1);
 
+
+    Player *player2 = get_player_by_id(2, players);
+    print_single_player(player2);
+
+
+    Player *player3 = get_player_by_id(3, players);
+    print_single_player(player3);
+
+    Player *player4 = get_player_by_id(4, players);
+    print_single_player(player4);
+
+    Player *player5 = get_player_by_id(5, players);
+    print_single_player(player5);
+     */
+
+
+
+
+    // print_single_player(players);
+
+
+
+
     // test init pile
+    /*
     printf("\ntest init pile\n");
-    llist pile_llist = init_pile(3, deck);
-    llist_print(pile_llist, numprint);
+    llist pile_llist = init_pile(PLAYER_NUMBER, deck);
+
+    llist_print(pile_llist);
+
+    // test remove player
+    printf("\ntest remove player\n");
+    remove_players(players);
+    printf("sig test");
+    print_players(players, PLAYER_NUMBER);
+     */
+
+    // printf("\ninit_player_hand_cards\n");
+    // init_player_hand_cards(2, deck, 17);
 
 
 
@@ -121,6 +173,7 @@ int main() {
     deal_card_for_player(3, pile, players);
     print_players(players, 3);
      */
+
 
 
 
