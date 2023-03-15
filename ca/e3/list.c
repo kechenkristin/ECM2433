@@ -10,23 +10,25 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+#define EMPTY_VALUE -1
 
 struct node {
     int data;
     struct node *next;
 };
 
-typedef struct node *llist;
+typedef struct node* llist;
 
 
-llist *llist_create() {
+llist* llist_create() {
     struct node *new_node;
 
     llist *new_list = (llist *) malloc(sizeof(llist));
     *new_list = (struct node *) malloc(sizeof(struct node));
 
     new_node = *new_list;
-    new_node->data = -1;
+    // empty data is -1
+    new_node->data = EMPTY_VALUE;
     new_node->next = NULL;
     return new_list;
 }
@@ -57,7 +59,8 @@ int llist_add_rear(int data, llist *list) {
     }
 
     curr = *list;
-    if (curr->data == -1) {
+    // if empty
+    if (curr->data == EMPTY_VALUE) {
         curr->data = data;
         return 1;
     }
@@ -99,7 +102,11 @@ int llist_remove_front(llist *list) {
 void llist_print(llist *list) {
     struct node *curr = *list;
     while (curr != NULL) {
-        printf("%d ", curr->data);
+        if (curr-> data == EMPTY_VALUE) {
+            printf(" ");
+        } else {
+            printf("%d ", curr->data);
+        }
         printf(" ");
         curr = curr->next;
     }
@@ -116,6 +123,19 @@ llist *create_llist_from_array(int *numbers, int len) {
         llist_add_rear(*(numbers + i), my_list);
 
     return my_list;
+}
+
+/* returns the length of the list. */
+int llist_len(llist *list) {
+    int len = 0;
+
+    struct node *curr = *list;
+
+    while (curr != NULL) {
+        len++;
+        curr = curr->next;
+    }
+    return len;
 }
 
 

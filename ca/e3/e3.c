@@ -1,10 +1,9 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-#define DECK_LEN 52
 #define PLAYER_NUMBER 6
-
-
+#define PACK_LEN 13
+#define SHUFFLE_TIMES 11
 
 #include "shuffle.c"
 #include "player.c"
@@ -19,57 +18,60 @@ function should return the number of turns that it takes for the game to finish.
 int beggar(int Nplayers, int *deck, int talkative);
 
 
-
-/*
 void deal_card_for_player(int Nplayers, int *deck, Player *players) {
-    int player_handcard_number = 52 / Nplayers;
     int i;
-    int player_size = get_player_size();
-    for (i = 0; i < player_handcard_number * Nplayers; i++) {
-        llist_print((players + (i % Nplayers) * player_size)->cards, numprint);
-        printf("%d ", deck + i);
-        // llist_add_rear((deck + i * 4), (players + (i % Nplayers) * player_size)->cards);
+    for (i = 0; i < DECK_LEN; i++) {
+        llist_add_rear(deck[i], players[i % Nplayers].cards);
     }
 }
- */
 
 
 /* automatically generate an integer deck[2, 3 ..., 14] * 4 */
-void init_deck(int *deck) {
+void init_deck_number(int *deck) {
     int i;
-for (i = 0; i < 52; i++)
+    for (i = 0; i < DECK_LEN; i++)
         // if ((i % 14) == 0) continue;
-        *deck++ = (i % 13) + 2;
-
-
+        *deck++ = (i % PACK_LEN) + 2;
 }
 
 void shuffle_deck(int *deck) {
-    riffle(deck, 52, 4, 11);
+    riffle(deck, DECK_LEN, INTEGER_SIZE, SHUFFLE_TIMES);
 }
 
-llist init_pile(int Nplayers, int *deck) {
-    int player_hand_cards = 52 / Nplayers;
-    int player_cards = player_hand_cards * Nplayers;
-    int pile_cards = 52 - player_cards;
+int* init_deck_array() {
+    int* deck_array = (int *) malloc(INTEGER_SIZE * DECK_LEN);
+    init_deck_number(deck_array);
+    shuffle_deck(deck_array);
+    return deck_array;
+}
 
-    llist pile_llist;
+void remove_deck_array(int *deck) {
+    free(deck);
+}
 
-    if (pile_cards > 0) {
-        int* pile;
-        pile = deck + player_cards;
-        pile_llist = create_llist_from_array(pile, pile_cards);
-    } else {
-        pile_llist = llist_create(0);
+// free!
+llist* init_deck_llist(int *deck) {
+    return create_llist_from_array(deck, DECK_LEN);
+}
+
+int finished(Player *players, int Nplayers) {
+    int i;
+    for (i = 0; i < Nplayers; i++) {
+        if (llist_len(players[i].cards) == DECK_LEN) return 1;
     }
-    return pile_llist;
+    return 0;
+}
+
+void print_turn(Player *players, llist pile) {
+    
 }
 
 
 int main() {
     // printf("player size: %d", get_player_size());
+    /*
     int deck[52];
-    init_deck(deck);
+    init_deck_number(deck);
     printIntDeck(deck, 52);
 
     printf("\nshuffle deck\n");
@@ -82,15 +84,22 @@ int main() {
     // test create a llist using array
     printf("\ntest create a llist using array\n");
     llist deck_llist = create_llist_from_array(deck, DECK_LEN);
+     */
+
+    int* deck_array = init_deck_array();
+    llist deck_llist = init_deck_llist(deck_array);
     llist_print(deck_llist);
 
+    // test list_len
+    printf("test llist_len: %d\n", llist_len(deck_llist));
+
     // test create a player
-    /*
+
     printf("\ntest create a player\n");
     Player *player_test = create_single_player(1, deck_llist);
     // test print player
     print_single_player(player_test);
-     */
+
 
     // test init_player_cards_from_deck
     /*
@@ -102,17 +111,22 @@ int main() {
     // test create_players
 
     printf("\ntest create_players\n");
-    Player *players = create_Nplayers(PLAYER_NUMBER, deck);
-    // Player *players = init_Nplayers(PLAYER_NUMBER, deck);
+    // Player *players = create_Nplayers(PLAYER_NUMBER, deck);
+    Player *players = init_Nplayers(PLAYER_NUMBER);
 
     printf("create_players success\n");
     print_players(players, PLAYER_NUMBER);
 
-    // test get_player_by_id
+    // test deal cards for players
+    deal_card_for_player(PLAYER_NUMBER, deck_array, players);
+    print_players(players, PLAYER_NUMBER);
+
     /*
+    // test get_player_by_id
     printf("get_player_by_id\n");
     Player *player0 = get_player_by_id(0, players);
     print_single_player(player0);
+    printf("cards len: %d\n", llist_len(player0->cards));
 
 
     Player *player1 = get_player_by_id(1, players);
@@ -175,6 +189,8 @@ int main() {
      */
 
 
-
+    // test remove players
+    printf("\ntest remove players\n");
+    remove_players(players, PLAYER_NUMBER);
 
 }
