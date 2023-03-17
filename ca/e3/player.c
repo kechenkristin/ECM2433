@@ -98,9 +98,3 @@ void remove_players(Player *players, int Nplayers) {
     }
     free(players);
 }
-
-
-
-
-
-

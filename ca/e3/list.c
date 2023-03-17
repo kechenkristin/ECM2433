@@ -83,6 +83,29 @@ int llist_add_rear(int data, llist *list) {
     return 1;
 }
 
+/* append formallist with appendlist. */
+int llist_append(llist *formallist, llist *appendlist) {
+    struct node *curr;
+
+    if (formallist == NULL || *formallist == NULL) {
+        fprintf(stderr, "llist_add_inorder: list is null\n");
+        return 0;
+    }
+
+    curr = *formallist;
+    // if empty
+    if (curr->data == EMPTY_VALUE) {
+        *formallist = *appendlist;
+        return 1;
+    }
+
+    while (curr->next != NULL) {
+        curr = curr->next;
+    }
+    curr->next = *appendlist;
+    return 1;
+}
+
 
 int llist_remove_front(llist *list) {
     int popped_data;
