@@ -220,7 +220,6 @@ int beggar_v3(int Nplayers, int *deck, int talkative) {
         for (i = 0; i < Nplayers; i++) {
 
 
-
             if (llist_len(players[i].cards) == 0) continue;
 
             if (talkative) print_turn(players, pile, Nplayers, i, turnCounter);
@@ -242,13 +241,90 @@ int beggar_v3(int Nplayers, int *deck, int talkative) {
             turnCounter++;
         }
     }
+}
+
+llist *no_penalty_turn(Player *player, llist *pile) {
+    int p_card_val = llist_remove_front(player->cards);
+    llist_add_rear(p_card_val, pile);
+    return NULL;
+}
+
+llist *penalty_turn2(Player *player, llist *pile, int penalty_cards_num) {
+    int i;
 
 
+    int player_hand_cards_num = llist_len(player->cards);
+    if (player_hand_cards_num < penalty_cards_num) penalty_cards_num = player_hand_cards_num;
+
+    for (i = 0; i < penalty_cards_num; i++) {
+        int p_card_val = llist_remove_front(player->cards);
+
+        llist_add_rear(p_card_val, pile);
+
+        int next_penalty_cards_num = is_penalty_cards(p_card_val);
+        if (next_penalty_cards_num) return NULL;
+    }
+
+
+    llist *new_pile = llist_create();
+    llist *ptr = llist_copy(pile);
+    *pile = *new_pile;
+    return ptr;
+}
+
+
+llist *take_turn(Player *player, llist *pile) {
+    int pile_val = llist_get_rear(pile);
+    int penalty_cards_num = is_penalty_cards(pile_val);
+
+    if (penalty_cards_num) {
+        llist *ret = penalty_turn2(player, pile, penalty_cards_num);
+        return ret;
+    } else {
+        llist *ret = no_penalty_turn(player, pile);
+        return ret;
+    }
+}
+
+int beggar_v4(int Nplayers, int *deck, int talkative) {
+    // set up
+    shuffle_deck(deck);
+    Player *players = setup_player(Nplayers, deck);
+    llist pile = init_pile();
+
+    int i;
+    int turnCounter = 1;
+
+    llist *reward;
+    while (1) {
+        for (i = 0; i < Nplayers; i++) {
+
+            if (llist_len(players[i].cards) == 0) continue;
+
+            if (talkative) print_turn(players, pile, Nplayers, i, turnCounter);
+
+            if (finished(players, Nplayers)) {
+                remove_players(players, Nplayers);
+                llist_free(pile);
+                return turnCounter;
+            }
+
+            reward = take_turn(&players[i], pile);
+
+            if (reward != NULL) {
+                int previous_player_id = get_previous_player_id(i, Nplayers, players);
+                llist_append(players[previous_player_id].cards, reward);
+                // llist_print(players[previous_player_id].cards);
+            }
+            turnCounter++;
+        }
+    }
 }
 
 
 int main() {
     // printf("player size: %d", get_player_size());
+
     /*
     int deck[52];
     init_deck_number(deck);
@@ -264,10 +340,15 @@ int main() {
     // test create a llist using array
     printf("\ntest create a llist using array\n");
     llist deck_llist = create_llist_from_array(deck, DECK_LEN);
-     */
+
+    // test copy list
+    printf("test copy_llist\n");
+    llist *copy_list_test = llist_copy(deck_llist);
+    llist_print(copy_list_test);
+    */
 
     int *deck_array = init_deck_array();
-    beggar_v3(PLAYER_NUMBER, deck_array, 1);
+    beggar_v4(PLAYER_NUMBER, deck_array, 1);
     /*
     llist deck_llist = init_deck_llist(deck_array);
     llist_print(deck_llist);
@@ -439,5 +520,7 @@ int main() {
     printf("\ntest remove players\n");
     remove_players(players, PLAYER_NUMBER);
      */
+
+
 
 }

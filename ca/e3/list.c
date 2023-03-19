@@ -88,7 +88,7 @@ int llist_append(llist *formallist, llist *appendlist) {
     struct node *curr;
 
     if (formallist == NULL || *formallist == NULL) {
-        fprintf(stderr, "llist_add_inorder: list is null\n");
+        fprintf(stderr, "llist_append: list is null\n");
         return 0;
     }
 
@@ -104,6 +104,53 @@ int llist_append(llist *formallist, llist *appendlist) {
     }
     curr->next = *appendlist;
     return 1;
+}
+
+
+/* copy every element of formal list into copy list */
+llist *llist_copy(llist *formallist) {
+    struct node *curr;
+
+    if (formallist == NULL || *formallist == NULL) {
+        fprintf(stderr, "llist_copy: list is null\n");
+        return 0;
+    }
+
+    curr = *formallist;
+    llist* copylist = llist_create();
+
+    // if empty
+    if (curr->data == EMPTY_VALUE) {
+        return copylist;
+    }
+
+    while (curr->next != NULL) {
+        llist_add_rear(curr->data, copylist);
+        curr = curr->next;
+    }
+    return copylist;
+}
+
+
+/* get the rear of a llist */
+int llist_get_rear(llist *list) {
+    struct node *curr;
+
+    if (list == NULL || *list == NULL) {
+        fprintf(stderr, "llist_append: list is null\n");
+        return 0;
+    }
+
+    curr = *list;
+    // if empty
+    if (curr->data == EMPTY_VALUE) {
+        return -1;
+    }
+
+    while (curr->next != NULL) {
+        curr = curr->next;
+    }
+    return curr->data;
 }
 
 
@@ -162,4 +209,10 @@ int llist_len(llist *list) {
 }
 
 
+int llist_is_empty(llist *list) {
+    struct node *curr = *list;
+
+    if (curr->data == -1) return 1;
+    return 0;
+}
 
