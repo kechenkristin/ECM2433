@@ -1,7 +1,5 @@
-
+#include "riffle.h"
 #include <stdio.h>
-#include "test3.c"
-
 
 int main() {
     // shuffle an array of integers 1, . . . , 20
@@ -25,12 +23,12 @@ int main() {
     char *greek[] = {" alpha ", " beta ", " gamma ", " delta ", " epsilon ", " zeta ",
                      " eta ", " theta ", " iota ", " kappa ", " lambda ", " mu "};
     printf("Before shuffle the char array\n");
-    printCharDeck2(greek, greek_len);
+    printCharDeck(greek, greek_len);
     printf("\n");
 
     printf("After riffle shuffle the char array\n");
     riffle(greek, greek_len, greek_size, 1);
-    printCharDeck2(greek, greek_len);
+    printCharDeck(greek, greek_len);
     printf("\n\n");
 
 

@@ -2,7 +2,6 @@
 #include <stdio.h>
 
 
-/* if c is a consonant, return 1, else 0 */
 int is_consonant(char c) {
         int lowercase_vowel, uppercase_vowel;
         lowercase_vowel = (c == 'a' || c == 'e' || c == 'i' || c == 'o' || c ==  'u');
@@ -11,7 +10,7 @@ int is_consonant(char c) {
 }
 
 
-/* counts how many starting consonant. */
+
 int consonant_count(char* str) {
 	int i = 0;
 
@@ -40,7 +39,7 @@ int consonant_count(char* str) {
 	return consonantCount;
 }
 
-/* handle the case of if the word begin with consonants */
+
 char* case_consonant(char* oldstr) {
 	int strLength = strlen(oldstr);
 
@@ -71,7 +70,7 @@ char* case_consonant(char* oldstr) {
 }
 
 
-/* handle the case of if the word begin with vowels */
+
 char* case_vowel(char* oldstr) {
 	int strLength = strlen(oldstr);
 	int newLength = strLength + 3;
@@ -88,7 +87,7 @@ char* case_vowel(char* oldstr) {
 	return newstr;
 }
 
-/* logical of pig, delegate task to different handler function based on the starting char */
+
 char* pig(char* word) {
 	if (is_consonant(word[0])) return case_consonant(word);
 	return case_vowel(word);

@@ -28,6 +28,7 @@ int main(int argc, const char **argv) {
 
 	char line[BUFFER_SIZE];
 	fgets(line, BUFSIZ, stdin);
+	printf("\n");
 	while (strcmp(line, "\n") != 0) {
 		into_tokens(line);
 		fgets(line, BUFSIZ, stdin);

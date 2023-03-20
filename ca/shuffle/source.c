@@ -1,12 +1,18 @@
-#include "riffle.h"
 #include <stdio.h>
+#include <time.h>
+#include <stdlib.h>
+#include <string.h>
 
+#define LEN 20
+#define INTEGER_SIZE 4
 
+/* init, set time as random seed */
 void init() {
     srand((unsigned int) time(NULL));
 }
 
 
+/* generate random number at the range of [low, high) */
 int randomize(int low, int high) {
     int diff, val;
 
@@ -20,6 +26,7 @@ int randomize(int low, int high) {
 }
 
 
+/* automatically generate an integer deck[1, 2, ..., len] */
 void init_array(int *deck, const int len) {
     int i;
     for (i = 0; i < len; ++i) {
@@ -28,6 +35,7 @@ void init_array(int *deck, const int len) {
 }
 
 
+/* print integer deck */
 void printIntDeck(const int *deck, const int len) {
     int i;
 
@@ -42,28 +50,19 @@ void printIntDeck(const int *deck, const int len) {
 }
 
 
+/* print array of strings */
 /* https://stackoverflow.com/questions/60591105/how-do-i-print-the-contents-of-an-array-of-strings */
-/*
-void printCharDeck(char *deck, int len) {
+void printCharDeck(const char *deck, const int len) {
     printf("[");
     char **ptr;
     for (ptr = deck; *ptr; ptr++)
         printf("%s", *ptr);
     printf("]");
 }
- */
 
-/* https://stackoverflow.com/questions/37224829/printing-strings-from-an-array-in-a-function-in-c */
-void printCharDeck(char *deck[], const int len) {
-    int i;
 
-    printf("[");
-    for (int i = 0; i < len; i++){
-        printf("%s", deck[i]);
-    }
-    printf("]");
-}
-
+/*  performs a single riffle shuffle of the array L each of
+ whose len elements is of size size bytes */
 void riffle_once(void *L, int len, int size, void *work) {
     int wlp, lp, rp, cutPoint;
     void *ptr, *LPtr, *RPtr;
@@ -123,6 +122,7 @@ void riffle_once(void *L, int len, int size, void *work) {
 }
 
 
+/* shuffles the array L by performing N successive riffles */
 void riffle(void *L, int len, int size, int N) {
     void *work;
     int i;
@@ -131,10 +131,12 @@ void riffle(void *L, int len, int size, int N) {
     }
 }
 
-
+/* cmp functions for comparing integers,
+ * return -1, 0 or +1 if the first argument is greater than, equal to, or less than the second
+argument respectively */
 int cmpInt(void *v1, void *v2) {
-    int *i1 = (int *)v1;
-    int *i2 = (int *)v2;
+    int *i1 = (int *) v1;
+    int *i2 = (int *) v2;
     int val = *i1 - *i2;
 
     // first greater than, -1
@@ -144,10 +146,10 @@ int cmpInt(void *v1, void *v2) {
     return 0;
 }
 
-
+/* cmp functions for comparing string*/
 int cmpStr(void *v1, void *v2) {
-    char *str1 = (char *)v1;
-    char *str2 = (char *)v2;
+    char *str1 = (char *) v1;
+    char *str2 = (char *) v2;
     int val = strcmp(str1, str2);
 
     // first greater than, -1
@@ -157,7 +159,9 @@ int cmpStr(void *v1, void *v2) {
     return 0;
 }
 
-
+/* checks that your riffle function respects that
+ * all the elements in the original array should be in the shuffled array and vice versa ;
+ * it should return 1 if it does and 0 if not. */
 int check_shuffle(void *L, int len, int size, int (*cmp)(void *, void *)) {
     void *before, *after, *BPtr, *APtr;
 
@@ -167,15 +171,15 @@ int check_shuffle(void *L, int len, int size, int (*cmp)(void *, void *)) {
     // before shuffle
     memcpy(before, L, len * size);
     // riffle_once(L, len, size, work);
-    riffle(L, len, size,1);
+    riffle(L, len, size, 1);
     // after shuffle
-    memcpy(after, L,len * size);
+    memcpy(after, L, len * size);
 
     int is_equal_count = 0;
     int i, j;
 
-    for (BPtr = before, i = 0; i < len; i++, BPtr+= size) {
-        for (APtr = after, j = 0; j < len; j++, APtr+= size) {
+    for (BPtr = before, i = 0; i < len; i++, BPtr += size) {
+        for (APtr = after, j = 0; j < len; j++, APtr += size) {
             int r = cmp(BPtr, APtr);
             if (r == 0) is_equal_count++;
         }
@@ -187,6 +191,7 @@ int check_shuffle(void *L, int len, int size, int (*cmp)(void *, void *)) {
 }
 
 
+/* evaluates how well an array numbers of len integers is shuffled */
 float quality(int *numbers, int len) {
     int good_count = 0;
     int num_of_pairs = len - 1;
@@ -202,7 +207,7 @@ float quality(int *numbers, int len) {
     return ret;
 }
 
-
+/* automatically generate an integer array with length len(0, 1, 2, ..., len - 1) */
 void generate_array_for_quality(int *nums, int len) {
     int i;
     for (i = 0; i < len; i++) {
@@ -212,6 +217,7 @@ void generate_array_for_quality(int *nums, int len) {
 }
 
 
+/* evaluate the average quality of a shuffle of the integers */
 float average_quality(int N, int shuffles, int trials) {
     int array_len = N;
     int nums[array_len];
