@@ -6,13 +6,22 @@
 
 /* functiona prototypes */
 
-/* if c is a consonant, return 1, else 0 */
+/* 
+* parametr: a single char
+* determine whether a char is a constant or not
+* if c is a consonant, return 1, else 0 
+*/
 int is_constant(char); 
 
-/* counts how many starting consonant. */
+/*  
+* para: a string
+* counts how many starting consonant.
+* return how many constant chars are there in the input string
+*/
 int constant_count(char*);
 
-/* handle the case of if the word begin with consonants */
+/* 
+* handle the case of if the word begin with consonants */
 char* case_constant(char*);
 
 /* handle the case of if the word begin with vowels */
