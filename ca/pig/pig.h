@@ -21,11 +21,22 @@ int is_constant(char);
 int constant_count(char*);
 
 /* 
-* handle the case of if the word begin with consonants */
+* input: a string of chars (a word)
+* handle the case of if the word begin with consonants 
+* return: word after manipulated
+*/
 char* case_constant(char*);
 
-/* handle the case of if the word begin with vowels */
+/*
+* input: a string of chars(a word)
+* handle the case of if the word begin with vowels 
+* return: word after manipulated
+*/
 char* case_vowel(char*);
 
-/* logical of pig, delegate task to different handler function based on the starting char */
+/* 
+* input: a string of chars(a word)
+* main logical of pig, delegate task to different handler function(case_vowel or case_constant) based on the starting char 
+* return: word after manipulated
+*/
 char* pig(char*);

@@ -18,4 +18,4 @@ riffle.o: riffle.c riffle.h
 	$(CC) -c riffle.c
 
 clean:
-	rm *.o demo_shuffle quality quality.txt
+	rm *.o demo_shuffle quality
