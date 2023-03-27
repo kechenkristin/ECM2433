@@ -2,7 +2,7 @@
 #include <stdio.h>
 
 #include "beggar.h"
-#include "stats.h"
+#include "stats.c"
 
 Stats *statistics(int Nplayers, int games) {
     int i;

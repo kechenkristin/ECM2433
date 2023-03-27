@@ -2,19 +2,10 @@
 #include <stdio.h>
 
 #define PACK_LEN 13
-#define SHUFFLE_TIMES 11
+#define SHUFFLE_TIMES 7
 
 #include "shuffle.c"
 #include "player.c"
-
-
-/* that returns true (non-zero) if one player has all the cards and the others have none */
-int finished(Player *players, int Nplayers);
-
-/* play a single game of beggar-your-neighbour with Nplayers using the shuffled deck of cards. If the argument talkative
-is not zero, your function should print details of what it is doing, similar to the excerpt above. Your
-function should return the number of turns that it takes for the game to finish.*/
-int beggar(int Nplayers, int *deck, int talkative);
 
 
 void deal_card_for_player(int Nplayers, int *deck, Player *players) {

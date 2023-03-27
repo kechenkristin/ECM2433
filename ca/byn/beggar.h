@@ -4,8 +4,8 @@
 #define PACK_LEN 13
 #define SHUFFLE_TIMES 11
 
-#include "riffle.h"
-#include "player.h"
+#include "riffle.c"
+#include "player.c"
 
 /*
  * deal cards for players
@@ -63,14 +63,34 @@ int is_penalty_cards(int card_val);
  */
 void print_turn(Player *players, llist pile, int Nplayers, int currPlayerId, int turnNum);
 
+/*
+ * player takes a single turn without paying any penalty cards
+ * Player *player: the player who takes the ture
+ * llist *pile: current pile of this turn
+ *
+ * return: the number of cards next player should pay for penalty cards
+ */
 int single_turn(Player *player, llist *pile);
 
+
+/*
+ * player takes a penalty turn with paying any penalty cards
+ * Player *player: the player who takes the ture
+ * llist *pile: current pile of this turn
+ * int penalty_cards_num: how many penalty cards player should pay for this turn
+ *
+ * return: the number of cards next player should pay for penalty cards
+ */
 int penalty_turn(Player *player, llist *pile, int penalty_cards_num);
 
-/* return the index of the previous player */
+/*
+ * return the index of the previous player
+ */
 int get_previous_player_id(int id, int Nplayers, Player *players);
 
-/* player get bonus cards, and set the pile to be empty. */
+/*
+ * player get bonus cards, and set the pile to be empty.
+ */
 void get_bonus_cards(Player *player, llist *pile);
 
 /* 

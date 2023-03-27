@@ -3,7 +3,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define LEN 20
 #define INTEGER_SIZE 4
 
 /* init, set time as random seed */
@@ -205,7 +204,7 @@ float quality(int *numbers, int len) {
     for (sPtr = numbers, i = 0; i < num_of_pairs; fPtr++, sPtr++, i++) {
         if (*sPtr < *fPtr) good_count++;
     }
-    float ret = good_count / (float) num_of_pairs;
+    float ret = (float ) good_count / (float) num_of_pairs;
     return ret;
 }
 
@@ -233,52 +232,5 @@ float average_quality(int N, int shuffles, int trials) {
         quality_count += quality_per;
 
     }
-    return quality_count / trials;
+    return quality_count / (float ) trials;
 }
-
-
-/*
-int main() {
-    // printf("randomize: %d\n", randomize(0, 2));
-
-    int deck[SIZE];
-
-    init();
-
-    printf("Riffle e2\n");
-    initDeck(deck, SIZE);
-    writeDeck(deck, SIZE);
-    printf("\n");
-    int *work;
-    int i;
-
-    printf("riffle_once\n");
-    riffle_once(deck, SIZE, 4, work);
-    writeDeck(deck, SIZE);
-
-    printf("\n");
-    printf("riffle\n");
-    riffle(deck, SIZE, 4, 100);
-    writeDeck(deck, SIZE);
-    printf("\n\n");
-
-    printf("test cmp function\n");
-    int i1 = 8;
-    int i2 = 8;
-    int *p1 = &i1;
-    int *p2 = &i2;
-
-    int r = cmpInt(p1, p2);
-    printf("%d\n", r);
-
-    printf("test check shuffle\n");
-    int deck2[SIZE];
-    initDeck(deck2, SIZE);
-    writeDeck(deck2, SIZE);
-    printf("\n");
-    int c = check_shuffle(deck2, SIZE, 4, cmpInt);
-    writeDeck(deck2, SIZE);
-    printf("\n");
-    printf("%d\n", c);
-}
- */

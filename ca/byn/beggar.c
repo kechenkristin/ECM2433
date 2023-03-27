@@ -91,8 +91,11 @@ void print_turn(Player *players, llist pile, int Nplayers, int currPlayerId, int
 int single_turn(Player *player, llist *pile) {
     int p_card_val = llist_remove_front(player->cards);
     llist_add_rear(p_card_val, pile);
+
+    // determine whether the next player should pay penalty cards or not
     int next_penalty_cards_num = is_penalty_cards(p_card_val);
 
+    // if the next player should pay for penalty card, return how many cards the next player should pay
     if (next_penalty_cards_num) return next_penalty_cards_num;
     return 0;
 }
@@ -100,7 +103,10 @@ int single_turn(Player *player, llist *pile) {
 int penalty_turn(Player *player, llist *pile, int penalty_cards_num) {
     int i;
 
+    // get player's hand card number
     int player_hand_cards_num = llist_len(player->cards);
+
+    // if the player's hand cards number less than penalty cards, then the player only need to pay all the hand cards
     if (player_hand_cards_num < penalty_cards_num) penalty_cards_num = player_hand_cards_num;
 
     for (i = 0; i < penalty_cards_num; i++) {

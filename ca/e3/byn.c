@@ -42,6 +42,6 @@ int main(int argc, char *argv[]) {
         Stats *stats = statistics(i, numOfTrials);
         printf("%d players: \n", i);
         print_stats(stats);
-        free(stats);
+        free_stats(stats);
     }
 }
