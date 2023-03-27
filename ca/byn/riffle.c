@@ -1,5 +1,5 @@
-#include "riffle.h"
 #include <stdio.h>
+#include "riffle.h"
 
 
 void init() {

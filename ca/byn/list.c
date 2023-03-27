@@ -1,11 +1,3 @@
-/* llist.h
- * Generic Linked List
- */
-/* llist.c
- * Generic Linked List implementation
- */
-
-/*https://gist.github.com/meylingtaing/11018042#file-llist-h-L26*/
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -19,7 +11,7 @@ struct node {
 
 typedef struct node* llist;
 
-
+/* creat an ampty llist, return a pointer to the llist. */
 llist* llist_create() {
     struct node *new_node;
 
@@ -34,6 +26,11 @@ llist* llist_create() {
 }
 
 
+/*
+ * free the memory for a list
+ *
+ * llist *list: a pointer to the list to be freed
+ */
 void llist_free(llist *list) {
     struct node *curr = *list;
     struct node *next;
@@ -47,7 +44,15 @@ void llist_free(llist *list) {
     free(list);
 }
 
-// Returns 0 on failure
+
+/*
+ * add an element to the rear of the list
+ *
+ * int data: element to be added
+ * llist *list: the list to be added
+ *
+ * return 1 if sucesses, 0 failures
+ */
 int llist_add_rear(int data, llist *list) {
     struct node *new_node;
     struct node *curr;
@@ -83,7 +88,15 @@ int llist_add_rear(int data, llist *list) {
     return 1;
 }
 
-/* append formallist with appendlist. */
+
+/*
+ * append another list to the rear of a list
+ *
+ * llist *formallist: the first list
+ * llist *appendlist: the sencond list
+ *
+ * return 1 if sucesses, 0 failures
+ */
 int llist_append(llist *formallist, llist *appendlist) {
     struct node *curr;
 
@@ -107,7 +120,7 @@ int llist_append(llist *formallist, llist *appendlist) {
 }
 
 
-/* copy every element of formal list into copy list */
+/* copy every element of formal list into copy list, return a pointer to the copy list */
 llist *llist_copy(llist *formallist) {
     struct node *curr;
 
@@ -132,7 +145,13 @@ llist *llist_copy(llist *formallist) {
 }
 
 
-/* get the rear of a llist */
+/*
+ * get the rear of a llist
+ *
+ * llist *list: the linked list
+ *
+ * return the rear element of the list
+ */
 int llist_get_rear(llist *list) {
     struct node *curr;
 
@@ -154,6 +173,13 @@ int llist_get_rear(llist *list) {
 }
 
 
+/*
+ * remove the front element of the list
+ *
+ * llist *list: the linked list
+ *
+ * return the front element
+ */
 int llist_remove_front(llist *list) {
     int popped_data;
     struct node *head = *list;
@@ -169,6 +195,10 @@ int llist_remove_front(llist *list) {
     return popped_data;
 }
 
+
+/*
+ * print the llist
+ */
 void llist_print(llist *list) {
     struct node *curr;
     curr = *list;
@@ -185,7 +215,14 @@ void llist_print(llist *list) {
 }
 
 
-/* create a llist from an integer array .*/
+/*
+ * create a llist from an integer array.
+ *
+ * int *numbers: array
+ * int len: length of the array
+ *
+ * return: pointer of a llist
+ */
 llist *create_llist_from_array(int *numbers, int len) {
     llist *my_list = llist_create();
 
@@ -196,7 +233,14 @@ llist *create_llist_from_array(int *numbers, int len) {
     return my_list;
 }
 
-/* returns the length of the list. */
+
+/*
+ * returns the length of the list.
+ *
+ * llist *list: the linked list
+ *
+ * return: the length of the array
+ */
 int llist_len(llist *list) {
     int len = 0;
 
@@ -210,6 +254,11 @@ int llist_len(llist *list) {
 }
 
 
+/*
+ * whether the list is empty or not
+ *
+ * return 1 if it is empty, 0 not.
+ */
 int llist_is_empty(llist *list) {
     struct node *curr = *list;
 

@@ -51,12 +51,14 @@ void printIntDeck(const int *deck, const int len) {
 
 
 /* print array of strings */
-/* https://stackoverflow.com/questions/60591105/how-do-i-print-the-contents-of-an-array-of-strings */
-void printCharDeck(const char *deck, const int len) {
+/* https://stackoverflow.com/questions/37224829/printing-strings-from-an-array-in-a-function-in-c */
+void printCharDeck(char *deck[], const int len) {
+    int i;
+
     printf("[");
-    char **ptr;
-    for (ptr = deck; *ptr; ptr++)
-        printf("%s", *ptr);
+    for (int i = 0; i < len; i++){
+        printf("%s", deck[i]);
+    }
     printf("]");
 }
 

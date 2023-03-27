@@ -1,0 +1,17 @@
+average quality (with 1 shuffles): 0.764626 
+average quality (with 2 shuffles): 0.657143 
+average quality (with 3 shuffles): 0.565306 
+average quality (with 4 shuffles): 0.540816 
+average quality (with 5 shuffles): 0.539456 
+average quality (with 6 shuffles): 0.515646 
+average quality (with 7 shuffles): 0.502721 
+average quality (with 8 shuffles): 0.513605 
+average quality (with 9 shuffles): 0.507483 
+average quality (with 10 shuffles): 0.513605 
+average quality (with 11 shuffles): 0.507483 
+average quality (with 12 shuffles): 0.501361 
+average quality (with 13 shuffles): 0.497959 
+average quality (with 14 shuffles): 0.498639 
+average quality (with 15 shuffles): 0.493197 
+
+In order to achieve a good shuffle, 7 times is necessary to shuffle an array of length 50
