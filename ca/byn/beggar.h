@@ -4,8 +4,8 @@
 #define PACK_LEN 13
 #define SHUFFLE_TIMES 11
 
-#include "riffle.c"
-#include "player.c"
+#include "riffle.h"
+#include "player.h"
 
 /*
  * deal cards for players

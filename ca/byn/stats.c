@@ -1,11 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include "stats.h"
 
-typedef struct {
-    int shortest;
-    int longest;
-    int average;
-} Stats;
 
 /*
  * create a Stats struct

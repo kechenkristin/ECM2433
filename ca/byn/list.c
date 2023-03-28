@@ -1,14 +1,6 @@
-#include <stdlib.h>
 #include <stdio.h>
+#include "list.h"
 
-#define EMPTY_VALUE -1
-
-struct node {
-    int data;
-    struct node *next;
-};
-
-typedef struct node* llist;
 
 /* creat an ampty llist, return a pointer to the llist. */
 llist* llist_create() {

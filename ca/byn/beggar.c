@@ -29,9 +29,6 @@ int *init_deck_array() {
 }
 
 
-
-
-// free!
 /* init a llist pile */
 llist *init_pile() {
     return llist_create();
@@ -165,11 +162,20 @@ int beggar(int Nplayers, int *deck, int talkative) {
             if (talkative) print_turn(players, *pile, Nplayers, i, turnCounter);
 
             if (finished(players, Nplayers)) {
+
+                /*
+                for (i = 0; i < Nplayers; i++) {
+                    llist_free(players[i].cards);
+                }
+                 */
+
                 remove_players(players, Nplayers);
                 llist_free(pile);
+
                 return turnCounter;
             }
 
+            // if the next penalty card is zero, then go to single turn without paying penalty cards
             if (next_pcards_num == 0) {
                 next_pcards_num = single_turn(&players[i], pile);
             } else {

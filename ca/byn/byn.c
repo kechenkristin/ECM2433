@@ -2,7 +2,7 @@
 #include <stdio.h>
 
 #include "beggar.h"
-#include "stats.c"
+#include "stats.h"
 
 Stats *statistics(int Nplayers, int games) {
     int i;
@@ -38,10 +38,22 @@ int main(int argc, char *argv[]) {
 
     int i;
 
+    char *filename = "statistics.txt";
+    FILE *fp = fopen(filename, "w");
+
+    if (fp == NULL) {
+        printf("Error opening the file %s", filename);
+        return -1;
+    }
+
+
     for (i = 2; i <= maxNumOfPlayers; i++) {
         Stats *stats = statistics(i, numOfTrials);
         printf("%d players: \n", i);
         print_stats(stats);
+
+        fprintf(fp, "%d players: \nshortest: %d\nlongest: %d\naverage: %d\n", i,stats->shortest, stats->longest, stats->average);
+
         free_stats(stats);
     }
 }

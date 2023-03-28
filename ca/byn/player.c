@@ -1,12 +1,5 @@
 #include <stdlib.h>
-#define DECK_LEN  52
-#include "list.c"
-
-
-typedef struct {
-    int id;
-    llist* cards;
-} Player;
+#include "player.h"
 
 
 /* init Nplayers for the game, create an array of Players. */

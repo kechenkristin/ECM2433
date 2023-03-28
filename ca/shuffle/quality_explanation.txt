@@ -13,3 +13,5 @@ average quality (with 12 shuffles): 0.501361
 average quality (with 13 shuffles): 0.497959 
 average quality (with 14 shuffles): 0.498639 
 average quality (with 15 shuffles): 0.493197 
+
+At least 7 shuffles can achieve good quality

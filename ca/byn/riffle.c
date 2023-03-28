@@ -1,10 +1,5 @@
 #include <stdio.h>
-#include <time.h>
-#include <stdlib.h>
-#include <string.h>
-
-#define LEN 20
-#define INTEGER_SIZE 4
+#include "riffle.h"
 
 /* init, set time as random seed */
 void init() {
