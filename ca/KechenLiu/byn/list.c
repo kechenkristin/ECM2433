@@ -256,4 +256,3 @@ int llist_is_empty(llist *list) {
     if (curr->data == -1) return 1;
     return 0;
 }
-

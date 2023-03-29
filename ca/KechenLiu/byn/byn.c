@@ -4,6 +4,15 @@
 #include "beggar.h"
 #include "stats.h"
 
+
+/*
+ * uses your beggar function to find the shortest, average and longest of games games
+ *
+ * int Nplayers: number of players
+ * int games: times of trials
+ *
+ * returns a strut with fields shortest, longest and average.
+ */
 Stats *statistics(int Nplayers, int games) {
     int i;
     int average_sum = 0;

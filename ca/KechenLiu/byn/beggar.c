@@ -157,28 +157,25 @@ int beggar(int Nplayers, int *deck, int talkative) {
         for (i = 0; i < Nplayers; i++) {
 
 
+	// A player leaves the game when they have no cards left
             if (llist_len(players[i].cards) == 0) continue;
 
             if (talkative) print_turn(players, *pile, Nplayers, i, turnCounter);
 
+	    // the game is won by the player who eventually has all the cards.
             if (finished(players, Nplayers)) {
-
-                /*
-                for (i = 0; i < Nplayers; i++) {
-                    llist_free(players[i].cards);
-                }
-                 */
-
                 remove_players(players, Nplayers);
                 llist_free(pile);
 
                 return turnCounter;
             }
 
-            // if the next penalty card is zero, then go to single turn without paying penalty cards
             if (next_pcards_num == 0) {
+            // if the next penalty card is zero, then go to single turn without paying penalty cards
                 next_pcards_num = single_turn(&players[i], pile);
             } else {
+
+            // if the next penalty card is not zero, then go to penalty turn to pay for penalty cards
                 next_pcards_num = penalty_turn(&players[i], pile, next_pcards_num);
                 if (next_pcards_num == 0) {
                     get_bonus_cards(&players[get_previous_player_id(i, Nplayers, players)], pile);

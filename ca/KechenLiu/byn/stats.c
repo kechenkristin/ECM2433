@@ -30,4 +30,3 @@ void print_stats(Stats *stats) {
 void free_stats(Stats *stats) {
     free(stats);
 }
-
