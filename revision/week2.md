@@ -79,8 +79,10 @@ Use it for a proper (pseudo-)random number (see more in slides)
 
 ## Functions
 - define and naming
-- function prototypes
+- function prototypes  
+![avatar](https://github.com/kechenkristin/ECM2433/blob/main/img/week2/fprototype.png)
 - scope
+![avatar](https://github.com/kechenkristin/ECM2433/blob/main/img/week2/fscope.png)
 	- global scope: generally it is very bad practice to use global variables
 	- static variables
 		- Declared using the 'static' keyword

@@ -18,7 +18,7 @@ in int main(), 0 => success, any other value => failure
 
 - variable declarations
 
-- base data types
+- base data types  
 | Data type        | Size (in bytes) |
 |------------------|----------------|
 | unsigned char    | 1              |
