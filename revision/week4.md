@@ -101,6 +101,7 @@ void setString(char **str) {
 
 
 ## Passing arguments to the main function
+[!avatar](https://github.com/kechenkristin/ECM2433/blob/main/img/week4/main.png)
 
 ## Function pointers
 - example1
@@ -152,14 +153,17 @@ see more details in slides
 	- an ordered sequence of **nodes**
 	- a memory-efficient means of storing large data structures
 	- a speed-efficient means of inserting and deleting nodes
+[!avatar](https://github.com/kechenkristin/ECM2433/blob/main/img/week4/linkedlist.png)
 
 - array list
+[!avatar](https://github.com/kechenkristin/ECM2433/blob/main/img/week4/arraylist.png)
 
 ## Files and Streams
 ### Console input
 scanf()
 
-###
+### Stream
+[!avatar](https://github.com/kechenkristin/ECM2433/blob/main/img/week4/stream.png)
 
 ```c
 #include <stdio.h>
@@ -171,7 +175,7 @@ int main () {
 	if ( fp == NULL ) {
 		printf("Cannot open file for read access\n");
 		exit(EXIT_FAILURE);
-}
+	}
 
 	/* do some file processing */
 	fclose(fp);
@@ -183,5 +187,36 @@ int main () {
 - error.h defines int error  
 see examples in slides
 
+- A call to ferror(fp)
+
 ### Write to a stream
+- fputc(ch, fp) 
+	- outputs the character in ch to the file pointed to by fp
+- fputs(str, fp)
+	- outputs the string in str to the file pointed to by fp
+	- the null terminator is not output
+
 ### Read from a stream
+- char ch = fgetc(fp)
+	- reads a single character from the file pointed to by fp and stores it in ch
+
+- fgets(str,count,fp)
+
+- fscanf(fp,"%d,%d",&x,&y)
+
+### Other common stream functions
+- fflush(fp)
+	- forces the output buffer to be written to the file
+- remove("myFile.txt")
+	- deletes the specified file
+	- return 0 on success; other integer on failure
+- rewind(fp)
+	- resets the file position indicator back to the beginning of the file
+
+### Standard streams
+- stdin: input from the terminal
+- stdout: output to the terminal; normal program output
+- stderr: output to the terminal; error and warning messages
+
+### Streams are buffered
+see example in slides
