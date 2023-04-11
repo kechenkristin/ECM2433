@@ -83,6 +83,9 @@ Use it for a proper (pseudo-)random number (see more in slides)
 ![avatar](https://github.com/kechenkristin/ECM2433/blob/main/img/week2/fprototype.png)
 - scope
 ![avatar](https://github.com/kechenkristin/ECM2433/blob/main/img/week2/fscope.png)
+
+https://zhuanlan.zhihu.com/p/27586298  
+
 	- global scope: generally it is very bad practice to use global variables
 	- static variables
 		- Declared using the 'static' keyword

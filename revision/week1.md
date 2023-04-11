@@ -6,6 +6,31 @@ cf: declarative: what outcomes should it achieve?
 - compiled
 - statically typed: types are checked before runtime
 - weakly typed: supports implicit type conversions, variable types must be declared, but can coerced to other types
+	- good: implicit type conversions
+	```c
+	unsigned short int x = 68;
+	short int y = x;
+	char c = x;
+	float f = x;
+	printf("x = %d\n", x);	// x = 68
+	printf("y = %d\n", y);	// y = 68
+	printf("c = %c\n", c);	// c = D
+	printf("f = %f\n", f);	// f = 68.000000
+	```
+	- bad
+	```c
+	unsigned short int x = 65535;
+	short int y = x;
+	char c = x;
+	float f = x;
+	printf("x = %d\n", x);	// x = 65535
+	printf("y = %d\n", y);	// y = -1
+	printf("c = %c\n", c);	// c= ???
+	printf("f = %f\n", f);	// f = 65535.000000
+	```
+
+ps: why 65535 is -1?  
+
 - portable: available on just about every platform
 
 ## Compile, link and execute
@@ -20,7 +45,7 @@ in int main(), 0 => success, any other value => failure
 
 - base data types  
 | Data type        | Size (in bytes) |
-|------------------|----------------|
+| ------------------ | ---------------- |
 | unsigned char    | 1              |
 | char             | 1              |
 | unsigned short   | 2              |
